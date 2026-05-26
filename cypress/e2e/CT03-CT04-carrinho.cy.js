@@ -8,6 +8,8 @@ describe("CT03 e CT04 - Carrinho", () => {
   });
 
   it("CT04 - Produto deve aparecer no carrinho", () => {
+    cy.clearCookies();
+    cy.clearLocalStorage();
     cy.login("standard_user", "secret_sauce");
     cy.url().should("include", "/inventory.html");
     cy.addFirstProductToCart();
