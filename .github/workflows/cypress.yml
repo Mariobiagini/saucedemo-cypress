@@ -1,0 +1,59 @@
+name: Cypress Tests - SauceDemo
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  cypress-run:
+    name: Executar Testes Cypress
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout do código
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      # 2. Instala Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 3. Instala dependências
+      - name: Instalar dependências
+        run: npm ci
+
+      # 4. Executa os testes Cypress em modo headless
+      - name: Executar testes Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          headed: false
+        env:
+          CYPRESS_BASE_URL: https://www.saucedemo.com
+
+      # 5. Faz upload dos screenshots em caso de falha
+      - name: Upload de screenshots (falhas)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          retention-days: 7
+
+      # 6. Faz upload dos vídeos sempre
+      - name: Upload de vídeos dos testes
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          retention-days: 7
