@@ -1,7 +1,5 @@
-﻿/// <reference types="cypress" />
-
-describe("CT01 e CT02 - Autenticação", () => {
-  it("CT01 - Login válido deve redirecionar para produtos", () => {
+describe("CT01 e CT02 - Autenticacao", () => {
+  it("CT01 - Login valido deve redirecionar para produtos", () => {
     cy.visit("/");
     cy.get('[data-test="username"]').type("standard_user");
     cy.get('[data-test="password"]').type("secret_sauce");
@@ -10,7 +8,7 @@ describe("CT01 e CT02 - Autenticação", () => {
     cy.get(".inventory_list").should("be.visible");
   });
 
-  it("CT02 - Login inválido deve exibir erro", () => {
+  it("CT02 - Login invalido deve exibir erro", () => {
     cy.visit("/");
     cy.get('[data-test="username"]').type("usuario_invalido");
     cy.get('[data-test="password"]').type("senha_errada");

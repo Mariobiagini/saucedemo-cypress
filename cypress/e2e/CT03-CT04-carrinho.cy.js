@@ -1,5 +1,3 @@
-﻿/// <reference types="cypress" />
-
 describe("CT03 e CT04 - Carrinho", () => {
   it("CT03 - Adicionar produto deve incrementar contador", () => {
     cy.login("standard_user", "secret_sauce");
@@ -12,7 +10,6 @@ describe("CT03 e CT04 - Carrinho", () => {
   it("CT04 - Produto deve aparecer no carrinho", () => {
     cy.login("standard_user", "secret_sauce");
     cy.url().should("include", "/inventory.html");
-    cy.get(".inventory_item_name").first().invoke("text").as("productName");
     cy.addFirstProductToCart();
     cy.get(".shopping_cart_link").click();
     cy.url().should("include", "/cart.html");
